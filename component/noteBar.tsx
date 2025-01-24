@@ -101,15 +101,13 @@ class Data {
     }
 }
 
-
-export default function NoteBar() {
+const HomePageNoteBar = () => {
     const [symbol, setSymbol] = useState("");
     const [data, setData] = useState(new Data("This is where a masterpiece in every sense of the word is created!", [
         {key: "key1", val: "value1"},
         {key: "key2", val: "value2"},
         {key: "key3", val: "value3"},
     ]));
-    const [tmp, setTmp] = useState(data.clone());
     useEffect(() => {
         // if they symbol in storage is not empty, load the symbol in storage
         storage.getItem(getSymbolStorageKey()).then((symbolVal) => {
@@ -117,20 +115,14 @@ export default function NoteBar() {
                 console.log('symbol in storage is null')
                 return
             }
-
             // set symbol
             setSymbol(symbolVal as string)
-
-            // if the symbol is not empty, load the data from storage
-            storage.getItem(getDataStorageKey(symbolVal as string)).then((value) => {
-                console.log("load data from storage", value)
-                setData(Data.fromStorageObject(value as DataInStorage ?? new DataInStorage("", [{key: "", val: ""}])))
-            })
         })
 
         // watch the symbol change
         // when the symbol change, we need to load the data from storage
         storage.watch(getSymbolStorageKey(), async (newValue) => {
+            console.log("symbol change to", newValue)
             setSymbol(newValue as string)
             // load the data from storage
             const dd =
@@ -141,9 +133,36 @@ export default function NoteBar() {
             setData(Data.fromStorageObject(dd))
         })
     }, [])
+    // when the symbol change, we need to load the data from storage
+    useEffect(() => {
+        // load the data from storage
+        storage.getItem(getDataStorageKey(symbol as string)).then((value) => {
+            console.log("load data from storage", value)
+            setData(Data.fromStorageObject(value as DataInStorage ?? new DataInStorage("", [{key: "", val: ""}])))
+        })
+    }, [symbol]);
+    return <NoteBar symbol={symbol} setData={setData} data={data}/>
+}
 
+const StockPageNoteBar = ({stock}) => {
+    const [data,setData] = useState(new Data("",[]))
+    useEffect(() => {
+        // load the data from storage
+        storage.getItem(getDataStorageKey(stock)).then((value) => {
+            setData(Data.fromStorageObject(value as DataInStorage ?? new DataInStorage("", [{key: "", val: ""}])))
+        })
+        // watch the storage change of stock
+        storage.watch(getDataStorageKey(stock), async (newValue) => {
+            setData(Data.fromStorageObject(newValue as DataInStorage ?? new DataInStorage("", [{key: "", val: ""}])))
+        })
+    }, []);
+
+    return <NoteBar symbol={stock} setData={setData} data={data}/>
+}
+
+function NoteBar({symbol, data, setData}) {
+    const [tmp, setTmp] = useState(data.clone());
     const [editMode, setEditMode] = useState(false);
-
     // make sure that the data and tmp is the same when data is changed,for example, when the data is loaded
     // from storage because we want to show the data for a new stock
     useEffect(() => {
@@ -189,6 +208,12 @@ export default function NoteBar() {
         storage.setItem<object>(getDataStorageKey(symbol), newTmp.toStorageObject())
     }
 
+    const discardChanges = () => {
+        setEditMode(false)
+        // discard the change
+        setTmp(data.clone())
+    }
+
     return <Stack>
         <Stack direction={"row"} sx={{
             paddingBottom: "6px",
@@ -196,7 +221,7 @@ export default function NoteBar() {
             justifyContent: "space-between"
         }}>
             <Typography fontSize="24px">
-                TITLE
+                {symbol} Note
             </Typography>
             {(editMode ?
                 <Stack direction={"row"}>
@@ -206,19 +231,12 @@ export default function NoteBar() {
                     <IconButton color={"primary"} onClick={saveData}>
                         <CheckIcon/>
                     </IconButton>
-                    <IconButton color={"primary"} onClick={() => {
-                        console.log(data, tmp)
-                        setEditMode(false)
-                        // discard the change
-                        setTmp(data.clone())
-                    }}>
+                    <IconButton color={"primary"} onClick={discardChanges}>
                         <CloseIcon/>
                     </IconButton>
                 </Stack>
                 :
-                <IconButton color={"primary"} onClick={() => {
-                    setEditMode(true)
-                }}>
+                <IconButton color={"primary"} onClick={() => setEditMode(true)}>
                     <EditNoteIcon/>
                 </IconButton>) as ReactNode}
         </Stack>
@@ -226,7 +244,7 @@ export default function NoteBar() {
         <Grid container spacing={0} sx={{
             marginTop: "10px",
         }}>
-            {Array.from(tmp.kv).map(([mapKey, kvElement]) => (
+            {Array.from(tmp.kv).map(([mapKey, kvElement] : [number, KVElement]) => (
                 <Grid key={mapKey} spacing={2} size={3} sx={{
                     marginTop: "12px",
                 }}>
@@ -249,9 +267,7 @@ export default function NoteBar() {
                                         width: "80%",
                                     }}/>
                                 <IconButton color={"primary"} size={"small"}>
-                                    <RemoveCircleOutlineIcon onClick={() => {
-                                        removeKV(mapKey)
-                                    }}/>
+                                    <RemoveCircleOutlineIcon onClick={() => removeKV(mapKey)}/>
                                 </IconButton>
                             </Stack>
                             <StyledTextField
@@ -314,3 +330,5 @@ const StyledTextField = styled(TextField)({
         fontSize: "13px",
     }
 });
+
+export {HomePageNoteBar,StockPageNoteBar}
