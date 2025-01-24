@@ -1,4 +1,4 @@
-import {Card, CardContent, Fade, Stack, Switch, Typography} from "@mui/material";
+import {Card, CardContent, Fade, Typography} from "@mui/material";
 
 export function Setting() {
     const [show, setShow] = useState(false)

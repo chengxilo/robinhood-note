@@ -6,7 +6,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import {storage, StorageItemKey} from "wxt/storage";
+import {storage} from "wxt/storage";
 import {getDataStorageKey, getSymbolStorageKey} from "@/storage.ts";
 
 class KVElement {

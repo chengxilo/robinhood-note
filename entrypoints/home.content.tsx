@@ -1,9 +1,9 @@
 import ReactDOM from "react-dom/client";
 import {ReactNode} from "react";
 import {ContentScriptContext} from "wxt/dist/client";
-import {IconButton, ThemeProvider, Typography} from "@mui/material";
+import {IconButton} from "@mui/material";
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import NoteBar, {HomePageNoteBar} from "@/component/noteBar.tsx";
+import {HomePageNoteBar} from "@/component/noteBar.tsx";
 import theme from "@/theme.js";
 import createCache from "@emotion/cache";
 import {CacheProvider} from "@emotion/react";
