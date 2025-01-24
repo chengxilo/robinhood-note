@@ -2,8 +2,6 @@ import ReactDOM from 'react-dom/client';
 import {StockPageNoteBar} from "@/component/noteBar.tsx";
 import {ReactNode} from "react";
 import ThemePack from "@/entrypoints/themepack.tsx";
-import {Typography} from "@mui/material";
-
 
 export default defineContentScript({
     matches: ['https://robinhood.com/*'],

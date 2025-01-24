@@ -4,7 +4,7 @@ import {ContentScriptContext} from "wxt/dist/client";
 import {IconButton} from "@mui/material";
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import {HomePageNoteBar} from "@/component/noteBar.tsx";
-import theme from "@/theme.js";
+import genTheme from "@/genTheme.js";
 import createCache from "@emotion/cache";
 import {CacheProvider} from "@emotion/react";
 import {getSymbolStorageKey} from "@/storage.ts";
@@ -27,7 +27,7 @@ export default defineContentScript({
                         prepend: true,
                     })
 
-                    console.log(theme)
+
                     const Component = () => {
                         return <CacheProvider value={cache}>
                             <ThemePack component={<HomePageNoteBar/>}/>
