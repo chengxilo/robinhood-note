@@ -7,21 +7,49 @@
 
 ---
 
+This is a web extension developed for Robinhood, based on the [WXT](https://wxt.dev/) + React + Material-UI
+
 ## 🎉 Features
 
 - [x] Take note on Robinhood website
 - [x] Export note to json file
-- [ ] Import note from json file(coming soon)
 - [x] UI almost the same as Robinhood
+- [ ] Import note from json file(coming soon)
+
 
 
 ## 🤺 Usage
 
 ### Option1: Install Release File 🍰
 
+1. Download the latest release file from [here](https://github.com/chengxilo/robinhood-note/releases/download/v0.0.1/robinhood-note-chrome-mv3.zip)
 
+2. Unzip the file
+
+3. Open `chrome://extensions/` in your browser, enable `Developer mode`, click `Load unpacked`,
+   and select the `chrome-mv3` folder.
 
 ### Option2: Compile Source Code 🛠️
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/chengxilo/robinhood-note.git
+    ```
+
+2. Install dependencies:
+    ```bash
+    pnpm install
+    ```
+
+3. Build the source code:
+    ```bash
+    pnpm run build
+    ```
+   
+4. Open `chrome://extensions/` in your browser, enable `Developer mode`, click `Load unpacked`, 
+and select the `.output/chrome-mv3` folder in the **project directory**.
+
+
 
 ## 🧩 Screenshots
 
