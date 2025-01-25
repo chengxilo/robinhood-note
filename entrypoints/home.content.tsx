@@ -19,6 +19,7 @@ export default defineContentScript({
                 anchor: "#react_root > main > div > div > div > div > div > div > div > div > main > div.css-1d3w5wq",
                 append: "after",
                 onMount: (container) => {
+                    container.style.margin = "16px 0px 0px 0px";
                     const root = ReactDOM.createRoot(container);
                     const cache = createCache({
                         key: 'note-bar',
