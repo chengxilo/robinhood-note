@@ -23,7 +23,7 @@ This is a web extension developed for Robinhood, based on the [WXT](https://wxt.
 
 ### Option1: Install Release File 🍰
 
-1. Download the latest release file from [here](https://github.com/chengxilo/robinhood-note/releases/download/v0.0.1/robinhood-note-chrome-mv3.zip)
+1. Download the latest release file from [here](https://github.com/chengxilo/robinhood-note/releases/download/v0.0.1/robinhood-note.zip)
 
 2. Unzip the file
 
