@@ -1,5 +1,6 @@
 import {
-    Button, Container,
+    Alert,
+    Button, Container, Snackbar,
     Stack, styled, Switch, ThemeProvider, Typography, useTheme,
 } from "@mui/material";
 import genTheme from "@/genTheme.js";
@@ -19,6 +20,8 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 function App() {
+    const [importAlert, setImportAlert] = useState({open: false,severity:'success',message:'default message'})
+
     const theme = genTheme('dark')
     return (<ThemeProvider theme={theme}>
             <Container
@@ -29,7 +32,7 @@ function App() {
                     justifyContent: 'center',
                     bgcolor: theme.palette.background.default,
                     width: '250px',
-                    height: '200px',
+                    height: '280px',
                 }}>
                 <Stack
                     alignItems={'center'}
@@ -39,22 +42,23 @@ function App() {
                     <Typography
                         color={'secondary'}
                         sx={{
+                            fontSize: '20px',
                             marginBottom: '20px'
                         }}>
                         Robinhood Note
                     </Typography>
                     <Typography color={'primary'} sx={{
-                        marginBottom: '10px',
+                        marginBottom: '14px',
                         fontWeight: 'bold'
                     }}>
                         Manage your note
                     </Typography>
                     <Button
                         component={'label'}
-                        variant={'contained'}
+                        variant={'outlined'}
                         sx={{
                             fontSize: '12px',
-                            marginBottom: '10px',
+                            marginBottom: '5px',
                             borderRadius: '44px',
                             textTransform: 'none',
                             width: '70%'
@@ -69,13 +73,15 @@ function App() {
                                     return
                                 }
                                 const file = fileList[0]
-                                try {
-                                    const reader = new FileReader()
-                                    reader.onload = async function (e) {
-                                        if (e.target === null) {
-                                            console.log('reader.onload, target is null')
-                                            return
-                                        }
+
+                                const reader = new FileReader()
+                                reader.onload = async function (e) {
+                                    if (e.target === null) {
+                                        console.log('reader.onload, target is null')
+                                        return
+                                    }
+                                    setImportAlert({open: true, severity: 'success', message: 'success, please refresh the page to see the changes!'})
+                                    try {
                                         const data = JSON.parse(e.target.result as string)
                                         console.log(data)
                                         for (const key1 of Object.keys(data)
@@ -83,19 +89,36 @@ function App() {
                                             const note = data[key1]
                                             await storage.setItem(('local:' + key1) as StorageItemKey, note)
                                         }
-                                        console.log('Imported')
+                                    } catch (err) {
+                                        console.log('Error: ', err)
+                                        setImportAlert({open: true, severity: 'error', message: `fail, Are sure the file "${file.name}" is correct?`})
                                     }
-                                    reader.readAsText(file)
-                                } catch (e) {
-                                    console.error(e)
                                 }
+                                reader.readAsText(file)
                             }}
                         />
                         Import Note
                     </Button>
-
+                    <Snackbar open={importAlert.open} autoHideDuration={6000} onClose={() => {
+                        setImportAlert({...importAlert,open: false})
+                    }}>
+                        <Alert
+                            onClose={() => {
+                                setImportAlert({...importAlert,open: false})
+                            }}
+                            severity={importAlert.severity}
+                            variant={'filled'}
+                            sx={{
+                                width: '100%',
+                                fontSize: '12px',
+                                padding: '0 10px'
+                            }}
+                        >
+                            {importAlert.message}
+                        </Alert>
+                    </Snackbar>
                     <Button
-                        variant={'contained'}
+                        variant={'outlined'}
                         size={'small'}
                         sx={{
                             fontSize: '12px',
