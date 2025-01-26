@@ -62,7 +62,7 @@ It will also show the note on the stock detail page.
 
 ![img_2.png](docs/img_2.png)
 
-edit it, you can add/delete key-value pair and note content.
+You can add/delete key-value pair and edit note content.
 
 ![img_1.png](docs/img_1.png)
 
