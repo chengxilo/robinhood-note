@@ -1,7 +1,9 @@
 import {StorageItemKey} from "wxt/storage";
 
-const getDataStorageKey = (symbol: string) => `local://robin-tag/note/${symbol}` as StorageItemKey;
-const getSymbolStorageKey = () => `local://robin-tag/symbol` as StorageItemKey;
+
+const dataStoragePrefix = 'robinhood-note/note/';
+const getDataStorageKey = (symbol: string) => `local:${dataStoragePrefix}${symbol}` as StorageItemKey;
+const getSymbolStorageKey = () => `local:robinhood-note/symbol` as StorageItemKey;
 
 
-export {getDataStorageKey, getSymbolStorageKey};
+export {getDataStorageKey, getSymbolStorageKey,dataStoragePrefix};
