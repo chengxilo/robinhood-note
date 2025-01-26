@@ -13,8 +13,9 @@ This is a web extension developed for Robinhood, based on the [WXT](https://wxt.
 
 - [x] Take note on Robinhood website
 - [x] Export note to json file
+- [x] Import note from json file
 - [x] UI almost the same as Robinhood
-- [ ] Import note from json file(coming soon)
+
 
 
 
@@ -65,9 +66,9 @@ edit it, you can add/delete key-value pair and note content.
 
 ![img_1.png](docs/img_1.png)
 
-Click extension icon to open the popup, you can download the note in json file.
+Click extension icon to open the popup, you can import/export your note by clicking the button.
 
-![img_3.png](docs/img_3.png)
+![img_1.png](docs/img_4.png)
 
 
 ## 🪁 Contributing
