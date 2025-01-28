@@ -11,7 +11,7 @@ import ThemePack from "@/entrypoints/themepack.tsx";
 
 
 export default defineContentScript({
-        matches: ['https://robinhood.com/'],
+        matches: ['https://robinhood.com/*'],
         async main(ctx: ContentScriptContext) {
             const ui = await createShadowRootUi(ctx, {
                 name: "note-bar",

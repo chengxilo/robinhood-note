@@ -4,7 +4,7 @@ import {ReactNode} from "react";
 import ThemePack from "@/entrypoints/themepack.tsx";
 
 export default defineContentScript({
-    matches: ['https://robinhood.com/stocks/*'],
+    matches: ['https://robinhood.com/*'],
     async main(ctx) {
         const container = document.createElement("div");
         container.style.width = "calc(100% - 24px)";
@@ -15,7 +15,7 @@ export default defineContentScript({
         const root = ReactDOM.createRoot(container);
 
         const observer = new MutationObserver((mutationsList, observer) => {
-            console.log('try observe')
+            // console.log('try observe')
             // find the buy tab as there is the stock symbol
             const buyTabOfBuyAndSell = document.querySelector('#sdp-ticker-symbol-highlight > div > form > div > div > div > div > div > div > div > div > div > div > h3 > span > span')
             const onlyBuyTab = document.querySelector('#sdp-ticker-symbol-highlight > div > form > div > div > div > div > div > div > div > span')
@@ -25,21 +25,20 @@ export default defineContentScript({
             } else if (onlyBuyTab) {
                 content = onlyBuyTab.textContent
             } else {
-                console.log('can not find tab for symbol')
+                // console.log('can not find tab for symbol')
                 return;
             }
             if (content === null) return;
             const symbol = content.split(' ')[1]
             const target = document.querySelector('#etf-about-header');
-            console.log(target)
+            // console.log(symbol)
             if (target) {
-                console.log('find target out', target.previousElementSibling?.id)
-                if (target.previousElementSibling && target.previousElementSibling.id === "note") return;
+                // console.log('insert note bar')
                 root.render(<>
                     <ThemePack component={<StockPageNoteBar stock={symbol}/>}/>
                 </> as ReactNode);
+                if (target.previousElementSibling && target.previousElementSibling.id === "note") return;
                 target.insertAdjacentElement('beforebegin', container);
-                observer.disconnect(); // Stop observing once the target is found and the element is inserted
             }
         });
 
