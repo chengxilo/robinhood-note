@@ -2,6 +2,8 @@ import ReactDOM from 'react-dom/client';
 import {StockPageNoteBar} from "@/component/noteBar.tsx";
 import {ReactNode} from "react";
 import ThemePack from "@/entrypoints/themepack.tsx";
+import createCache from "@emotion/cache";
+import {CacheProvider} from "@emotion/react";
 
 export default defineContentScript({
     matches: ['https://robinhood.com/*'],
@@ -12,7 +14,15 @@ export default defineContentScript({
         container.style.marginRight = "12px"
         container.style.marginBottom = "48px";
         container.id = "note";
-        const root = ReactDOM.createRoot(container);
+        const shadowContainer = container.attachShadow({mode: 'open'});
+        const shadowRootElement = document.createElement('div');
+        shadowContainer.appendChild(shadowRootElement)
+        const cache = createCache({
+            key: 'note-bar',
+            container: shadowContainer,
+            prepend: true
+        })
+        const root = ReactDOM.createRoot(shadowRootElement);
 
         const observer = new MutationObserver((mutationsList, observer) => {
             // console.log('try observe')
@@ -34,9 +44,10 @@ export default defineContentScript({
             // console.log(symbol)
             if (target) {
                 // console.log('insert note bar')
-                root.render(<>
-                    <ThemePack component={<StockPageNoteBar stock={symbol}/>}/>
-                </> as ReactNode);
+                root.render(
+                    <CacheProvider value={cache}>
+                        <ThemePack component={<StockPageNoteBar stock={symbol}/>}/>
+                    </CacheProvider> as ReactNode);
                 if (target.previousElementSibling && target.previousElementSibling.id === "note") return;
                 target.insertAdjacentElement('beforebegin', container);
             }
