@@ -1,6 +1,6 @@
 {
   "name": "robinhood-note",
-  "description": "a note extension for Robinhood, user can take note on Robinhood website directly, for example their target price, their opinion about the stock, at what price they will add position, etc. It makes it easier to track the stock market.",
+  "description": "a note extension for Robinhood.",
   "private": true,
   "version": "0.0.0",
   "type": "module",
