@@ -221,7 +221,7 @@ function NoteBar({symbol, data, setData}) {
             justifyContent: "space-between"
         }}>
             <Typography fontSize="24px">
-                {symbol} Note
+                {symbol ? `${symbol} Note` : "Stock Not Selected"}
             </Typography>
             {(editMode ?
                 <Stack direction={"row"}>
