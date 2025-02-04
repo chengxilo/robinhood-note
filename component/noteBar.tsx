@@ -254,6 +254,9 @@ function NoteBar({symbol, data, setData}) {
                                     size={"small"}
                                     slotProps={{input: {sx: {fontWeight: "bold"}}}}
                                     value={tmp.kv.get(mapKey)?.key ?? ""}
+                                    onKeyDown={(e) => {
+                                        e.stopPropagation()
+                                    }}
                                     onChange={(e) => {
                                         let newTmp = tmp.clone();
                                         newTmp.kv.set(mapKey, new KVElement(
@@ -273,6 +276,9 @@ function NoteBar({symbol, data, setData}) {
                             <StyledTextField
                                 size={"small"}
                                 value={tmp.kv.get(mapKey)?.val ?? ""}
+                                onKeyDown={(e) => {
+                                    e.stopPropagation()
+                                }}
                                 onChange={(e) => {
                                     let newTmp = tmp.clone();
                                     newTmp.kv.set(mapKey, new KVElement(
@@ -305,6 +311,9 @@ function NoteBar({symbol, data, setData}) {
                 {(editMode ?
                     <StyledTextField
                         sx={{width: "100%",}}
+                        onKeyDown={(e) => {
+                            e.stopPropagation()
+                        }}
                         onChange={(e) => {
                             let newTmp = tmp.clone();
                             newTmp.note = e.target.value;
