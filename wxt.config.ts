@@ -8,6 +8,6 @@ export default defineConfig({
     name: 'Robinhood Note',
     description: "A note extension for Robinhood. You can take notes on the Robinhood website with it",
     permissions: ['storage'],
-    version: '0.0.1'
+    version: '0.0.2'
   }
 });
