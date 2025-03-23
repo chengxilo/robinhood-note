@@ -17,11 +17,6 @@ export default defineContentScript({
         const shadowContainer = container.attachShadow({mode: 'open'});
         const shadowRootElement = document.createElement('div');
         shadowContainer.appendChild(shadowRootElement)
-        const cache = createCache({
-            key: 'note-bar',
-            container: shadowContainer,
-            prepend: true
-        })
         const root = ReactDOM.createRoot(shadowRootElement);
 
         const observer = new MutationObserver((mutationsList, observer) => {
@@ -43,6 +38,11 @@ export default defineContentScript({
             const target = document.querySelector('#etf-about-header');
             // console.log(symbol)
             if (target) {
+                const cache = createCache({
+                    key: 'note-bar',
+                    container: shadowContainer,
+                    prepend: true
+                })
                 // console.log('insert note bar')
                 root.render(
                     <CacheProvider value={cache}>
