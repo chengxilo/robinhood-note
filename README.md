@@ -21,14 +21,9 @@ This is a web extension developed for Robinhood, based on the [WXT](https://wxt.
 
 ## 🤺 Usage
 
-### Option1: Install Release File 🍰
+### Option1: Install in chrome web store
 
-1. Download the latest release file from [here](https://github.com/chengxilo/robinhood-note/releases/download/v0.0.1/robinhood-note.zip)
-
-2. Unzip the file
-
-3. Open `chrome://extensions/` in your browser, enable `Developer mode`, click `Load unpacked`,
-   and select the `chrome-mv3` folder.
+[Download Robinhood Note](https://chromewebstore.google.com/detail/robinhood-note/pepimjpimedlkcalcikemegmfgbbolla)
 
 ### Option2: Compile Source Code 🛠️
 
