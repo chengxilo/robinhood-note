@@ -21,7 +21,7 @@ This is a web extension developed for Robinhood, based on the [WXT](https://wxt.
 
 ## 🤺 Usage
 
-### Option1: Install in chrome web store
+### Option1: Install in chrome web store (Currently Not Available)
 
 [Download Robinhood Note](https://chromewebstore.google.com/detail/robinhood-note/pepimjpimedlkcalcikemegmfgbbolla)
 
